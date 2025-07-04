@@ -3,7 +3,7 @@ import CurrencyCard from "./components/currencyCard/CurrencyCard.tsx";
 import { currency } from "./helpers/well.ts";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import BasicSelect from "./components/myCurrencyInput/myCurrencyInput.tsx";
+import MyCurrencyInput from "./components/myCurrencyInput/MyCurrencyInput.tsx";
 
 interface CurrencyValue {
   Value: number; // Текущее значение
@@ -49,7 +49,7 @@ function App() {
         })}
       </div>
       <div className={styles.well_wrapper}>
-        <BasicSelect />
+        <MyCurrencyInput />
       </div>
     </div>
   );
