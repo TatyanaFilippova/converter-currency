@@ -3,7 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import styles from "./style.module.css";
 import { TextField, FormHelperText } from "@mui/material";
 
@@ -15,8 +15,7 @@ export default function MyCurrencyInput() {
     currencies: "",
   });
 
-  const validate = () => {
-    let valid = true;
+  useEffect(() => {
     const newErrors = {
       well: "",
       currencies: "",
@@ -24,40 +23,29 @@ export default function MyCurrencyInput() {
 
     if (!well) {
       newErrors.well = "Пожалуйста, выберите валюту";
-      valid = false;
     }
 
     if (!currencies) {
       newErrors.currencies = "Пожалуйста, введите сумму";
-      valid = false;
     } else if (isNaN(Number(currencies))) {
       newErrors.currencies = "Сумма должна быть числом";
-      valid = false;
     } else if (Number(currencies) <= 0) {
       newErrors.currencies = "Сумма должна быть больше нуля";
-      valid = false;
     }
 
     setErrors(newErrors);
-    return valid;
-  };
+  }, [well, currencies]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setWell(event.target.value as string);
-    // Очищаем ошибку при изменении
-    setErrors((prev) => ({ ...prev, well: "" }));
   };
 
   const handleChange2 = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrencies(event.target.value as string);
-    // Очищаем ошибку при изменении
-    setErrors((prev) => ({ ...prev, currencies: "" }));
   };
 
-  console.log(currencies);
-  console.log(well);
   return (
-    <div className={styles.wrapper} onClick={validate}>
+    <div className={styles.wrapper}>
       <Box sx={{ minWidth: 120, width: "100%", mb: 2 }}>
         <FormControl fullWidth error={!!errors.well}>
           <InputLabel id="demo-simple-select-label">Отдаю</InputLabel>
