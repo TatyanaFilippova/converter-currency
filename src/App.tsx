@@ -4,19 +4,20 @@ import { currency } from "./helpers/well.ts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MyCurrencyInput from "./components/myCurrencyInput/MyCurrencyInput.tsx";
+import ReceivedCurrencyInput from "./components/receivedCurrencyInput/ReceivedCurrencyInput.tsx";
 
-interface CurrencyValue {
+export interface CurrencyValue {
   Value: number; // Текущее значение
   Previous: number; // Предыдущее значение
   CharCode: string; // Код валюты (например, USD)
   Name: string; // Название валюты
 }
 
-interface CurrencyData {
+export interface CurrencyData {
   [key: string]: CurrencyValue; // Динамические ключи для разных валют
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   Valute: CurrencyData;
 }
 
@@ -50,6 +51,7 @@ function App() {
       </div>
       <div className={styles.well_wrapper}>
         <MyCurrencyInput />
+        <ReceivedCurrencyInput />
       </div>
     </div>
   );
