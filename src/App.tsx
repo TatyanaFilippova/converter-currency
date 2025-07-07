@@ -1,20 +1,21 @@
 import styles from "./App.module.css";
 import CurrencyCard from "./components/currencyCard/CurrencyCard.tsx";
 import { currency } from "./helpers/well.ts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import MyCurrencyInput from "./components/myCurrencyInput/MyCurrencyInput.tsx";
 import ReceivedCurrencyInput from "./components/receivedCurrencyInput/ReceivedCurrencyInput.tsx";
+import { ContextData } from "./context/data.tsx";
 
 export interface CurrencyValue {
-  Value: number; // Текущее значение
-  Previous: number; // Предыдущее значение
-  CharCode: string; // Код валюты (например, USD)
-  Name: string; // Название валюты
+  Value: number;
+  Previous: number;
+  CharCode: string;
+  Name: string;
 }
 
 export interface CurrencyData {
-  [key: string]: CurrencyValue; // Динамические ключи для разных валют
+  [key: string]: CurrencyValue;
 }
 
 export interface ApiResponse {
@@ -23,6 +24,7 @@ export interface ApiResponse {
 
 function App() {
   const [data, setData] = useState<ApiResponse>();
+  const { value, setValue } = useContext(ContextData);
   useEffect(() => {
     axios
       .get("https://www.cbr-xml-daily.ru/daily_json.js")
@@ -33,7 +35,18 @@ function App() {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    if (!data) return;
+    setValue({
+      ...value,
+      currentRate: data.Valute[value.receivedWell]?.Previous.toFixed(2),
+    });
+  }, [data, value.receivedWell]);
+
   if (!data) return null;
+
+  console.log(value.currentRate);
 
   return (
     <div className={styles.wrapper}>
@@ -44,7 +57,7 @@ function App() {
             <CurrencyCard
               currency={well}
               key={well}
-              value={+data.Valute[well].Previous.toFixed(2)}
+              value={data.Valute[well].Previous.toFixed(2)}
             />
           );
         })}

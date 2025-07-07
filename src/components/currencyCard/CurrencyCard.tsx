@@ -2,7 +2,7 @@ import styles from "./style.module.css";
 
 interface ICurrencyCard {
   currency: string;
-  value: number;
+  value: string;
 }
 
 const CurrencyCard = ({ currency, value }: ICurrencyCard) => {

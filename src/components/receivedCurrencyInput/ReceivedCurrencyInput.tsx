@@ -3,45 +3,25 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import styles from "./style.module.css";
 import { TextField, FormHelperText } from "@mui/material";
 import { ContextData } from "../../context/data.tsx";
+import useErrors from "../../hook/useErrors.ts";
 
 export default function ReceivedCurrencyInput() {
-  const [receivedWell, setReceivedWell] = useState("");
+  const { setValue, value } = useContext(ContextData);
   const finalСurrency = "";
-  const [errors, setErrors] = useState({
-    receivedWell: "",
-  });
-
-  useEffect(() => {
-    const newErrors = {
-      receivedWell: "",
-    };
-
-    if (!receivedWell) {
-      newErrors.receivedWell = "Пожалуйста, выберите валюту";
-    }
-
-    setErrors(newErrors);
-  }, [receivedWell]);
+  const errors = useErrors();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setReceivedWell(event.target.value as string);
-  };
-
-  //вызываю контекст
-  const { setValue, value } = useContext(ContextData);
-
-  useEffect(() => {
     setValue({
       ...value,
-      receivedWell: receivedWell,
+      receivedWell: event.target.value as string,
       receivedMoney: finalСurrency,
     });
-  }, [receivedWell, finalСurrency]);
-  //
+  };
+
   console.log(value.receivedWell);
   console.log(value.receivedMoney);
 
@@ -53,13 +33,12 @@ export default function ReceivedCurrencyInput() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={receivedWell}
+            value={value.receivedWell}
             label="Получаю"
             onChange={handleChange}
             className={styles.input}
           >
-            <MenuItem value={"RUB"}>RUB - Рубли</MenuItem>
-            <MenuItem value={"GPB"}>GPB - Фунт стерлингов</MenuItem>
+            <MenuItem value={"GBP"}>GBP - Фунт стерлингов</MenuItem>
             <MenuItem value={"USD"}>USD - Доллар США</MenuItem>
             <MenuItem value={"EUR"}>EUR - Евро</MenuItem>
           </Select>
@@ -68,7 +47,6 @@ export default function ReceivedCurrencyInput() {
           )}
         </FormControl>
       </Box>
-
       <Box component="div" sx={{ "& > :not(style)": { width: "100%" }, mb: 2 }}>
         <TextField
           id="outlined-basic"
