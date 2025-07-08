@@ -7,7 +7,6 @@ import {
 } from "react";
 
 interface Currency {
-  myCurrency: string;
   moneyCurrency: string;
   receivedWell: string;
   receivedMoney: string;
@@ -19,8 +18,7 @@ interface ContextProps {
 }
 
 const currencyExchange: Currency = {
-  myCurrency: "", //выбранная из списка валюта
-  moneyCurrency: "", //веденное число этой валюты
+  moneyCurrency: "", //веденное число
   receivedWell: "", //выбранная из списка валюта, которую хочу получить
   receivedMoney: "", //вычисляемые данные
   currentRate: "", //действующий курс для вычисления

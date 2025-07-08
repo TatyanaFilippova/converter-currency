@@ -3,8 +3,19 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
+
+
 }
 
 .input{
-    background-color: white;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #bfbebe;
+    height: 56px;
+    text-align: start;
+    padding: 17px 14px;
+    font-size: 18px;
+
+
 }
+

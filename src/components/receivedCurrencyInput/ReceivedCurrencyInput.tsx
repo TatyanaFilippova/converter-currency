@@ -5,29 +5,27 @@ import FormControl from "@mui/material/FormControl";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
 import styles from "./style.module.css";
-import { TextField, FormHelperText } from "@mui/material";
+import { FormHelperText } from "@mui/material";
 import { ContextData } from "../../context/data.tsx";
-import useErrors from "../../hook/useErrors.ts";
+import useErrors from "../../hooks/useErrors.ts";
+import { useCalcWell } from "../../hooks/useCalcWell.ts";
+import { symbols } from "../../helpers/well.ts";
 
 export default function ReceivedCurrencyInput() {
   const { setValue, value } = useContext(ContextData);
-  const finalСurrency = "";
+  const finalCurrency = useCalcWell();
   const errors = useErrors();
 
   const handleChange = (event: SelectChangeEvent) => {
     setValue({
       ...value,
       receivedWell: event.target.value as string,
-      receivedMoney: finalСurrency,
     });
   };
 
-  console.log(value.receivedWell);
-  console.log(value.receivedMoney);
-
   return (
     <div className={styles.wrapper}>
-      <Box sx={{ minWidth: 120, width: "100%", mb: 2 }}>
+      <Box sx={{ minWidth: 120, width: "100%", mb: 2, height: "56px" }}>
         <FormControl fullWidth error={!!errors.receivedWell}>
           <InputLabel id="demo-simple-select-label">Получаю</InputLabel>
           <Select
@@ -36,7 +34,6 @@ export default function ReceivedCurrencyInput() {
             value={value.receivedWell}
             label="Получаю"
             onChange={handleChange}
-            className={styles.input}
           >
             <MenuItem value={"GBP"}>GBP - Фунт стерлингов</MenuItem>
             <MenuItem value={"USD"}>USD - Доллар США</MenuItem>
@@ -47,17 +44,11 @@ export default function ReceivedCurrencyInput() {
           )}
         </FormControl>
       </Box>
-      <Box component="div" sx={{ "& > :not(style)": { width: "100%" }, mb: 2 }}>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          value={finalСurrency}
-          label=""
-          type="number"
-          disabled={true}
-          className={styles.input}
-        />
-      </Box>
+      <div className={styles.input}>
+        {finalCurrency
+          ? finalCurrency + " " + symbols[value.receivedWell]
+          : "0"}
+      </div>
     </div>
   );
 }
