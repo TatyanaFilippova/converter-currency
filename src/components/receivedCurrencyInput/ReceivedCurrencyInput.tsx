@@ -47,7 +47,7 @@ export default function ReceivedCurrencyInput() {
       <div className={styles.input}>
         {finalCurrency
           ? finalCurrency + " " + symbols[value.receivedWell]
-          : "0"}
+          : " "}
       </div>
     </div>
   );

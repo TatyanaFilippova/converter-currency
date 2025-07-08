@@ -16,10 +16,7 @@ export default function useErrors() {
 
     if (!value.moneyCurrency) {
       newErrors.moneyCurrency = "Пожалуйста, введите сумму";
-    } else if (Number(value.moneyCurrency) <= 0) {
-      newErrors.moneyCurrency = "Сумма должна быть больше нуля";
     }
-
     if (!value.receivedWell) {
       newErrors.receivedWell = "Пожалуйста, выберите валюту";
     }

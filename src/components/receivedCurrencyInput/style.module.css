@@ -3,8 +3,6 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
-
-
 }
 
 .input{
@@ -15,7 +13,5 @@
     text-align: start;
     padding: 17px 14px;
     font-size: 18px;
-
-
 }
 

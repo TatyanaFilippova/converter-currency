@@ -10,15 +10,13 @@ export default function MyCurrencyInput() {
   const errors = useErrors();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (+event.target.value >= 0) {
+    if (+event.target.value > 0) {
       setValue({
         ...value,
         moneyCurrency: event.target.value as string,
       });
     }
   };
-
-  console.log(value.moneyCurrency);
 
   return (
     <div className={styles.wrapper}>
@@ -28,10 +26,8 @@ export default function MyCurrencyInput() {
           value={"RUB - Рубли"}
           aria-readonly={true}
           label={"Отдаю"}
-          className={styles.input}
         />
       </Box>
-
       <Box
         component="div"
         sx={{ "& > :not(style)": { width: "100%" }, mb: 2, height: "56px" }}
@@ -45,7 +41,6 @@ export default function MyCurrencyInput() {
           helperText={errors.moneyCurrency}
           label="Сумма в ₽"
           type="number"
-          className={styles.input}
         />
       </Box>
     </div>

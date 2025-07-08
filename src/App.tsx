@@ -46,8 +46,6 @@ function App() {
 
   if (!data) return null;
 
-  console.log(value.currentRate);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>Конвертер валют</div>
